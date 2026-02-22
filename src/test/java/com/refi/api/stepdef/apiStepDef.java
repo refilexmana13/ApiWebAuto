@@ -23,9 +23,18 @@ public class apiStepDef {
 
 
     @When("I send POST HTTP request")
-    public void iSendPOSTHTTPRequest() {
+    public void iSendPOSTHTTPRequest() throws InterruptedException {
         response = api.postCreateUser(name, "chena" + System.currentTimeMillis() + "@mail.com", "male", "active");
+        // Debug
+        System.out.println("POST STATUS = " + response.statusCode());
+        System.out.println("POST BODY = " + response.getBody().asString());
+
+        //validasi post sukses
+        Assert.assertEquals(201, response.statusCode());
+
         userId = response.jsonPath().getInt("id");
+        Thread.sleep(2000);
+        System.out.println("Created User ID = " + userId);
     }
 
 

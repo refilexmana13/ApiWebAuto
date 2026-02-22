@@ -16,6 +16,8 @@ public class baseApi {
         body.put("gender", gender);
         body.put("status", status);
 
+        System.out.println("TOKEN = " + TOKEN);
+
         return  RestAssured.given()
                 .header("Authorization", "Bearer " + TOKEN)
                 .header("Content-Type", "application/json")

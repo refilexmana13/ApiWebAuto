@@ -20,12 +20,54 @@ dependencies {
 
     // JUnit 4
     testImplementation 'junit:junit:4.13.2'
+    testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.14.1'
+
 
     testImplementation group: 'org.json', name: 'json', version: '20251224'
 
+    // Selenium WebDriver untuk UI testing
+    testImplementation 'org.seleniumhq.selenium:selenium-java:4.40.0'
+    testImplementation 'io.github.bonigarcia:webdrivermanager:6.3.3'
 
 }
 
 test {
     useJUnit()
+}
+
+tasks.register("runAllTests", Test) {
+    useJUnit()
+
+    // Run all tests (both API and Web)
+    filter {
+        includeTestsMatching 'com.refi.runners.apiRunners'
+        includeTestsMatching 'com.refi.runners.webRunner'
+    }
+
+    description = 'Run all tests with Cucumber'
+    group = 'verification'
+}
+
+tasks.register('runApiTests', Test) {
+    useJUnit()
+
+    // Run only the API test runner
+    filter {
+        includeTestsMatching 'com.refi.runners.apiRunners'
+    }
+
+    description = 'Run API tests with Cucumber'
+    group = 'verification'
+}
+
+tasks.register("runWebTests", Test) {
+    useJUnit()
+
+    // Run only the Web test runner
+    filter {
+        includeTestsMatching 'com.refi.runners.webRunner'
+    }
+
+    description = 'Run Web tests with Cucumber'
+    group = 'verification'
 }

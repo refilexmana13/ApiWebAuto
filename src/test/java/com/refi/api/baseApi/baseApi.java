@@ -23,9 +23,9 @@ public class baseApi {
                 .post(URL);
     }
 
-    public Response getAllUsers() {
+    public Response getUserById(int userId) {
         return RestAssured.given()
                 .header("Authorization", "Bearer " + TOKEN)
-                .get(URL);
+                .get(URL + "/" + userId);
     }
 }

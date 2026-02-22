@@ -12,7 +12,9 @@ public class apiStepDef {
 
     baseApi api ;
     Response response;
-    String name = "John Chena";
+    String name = "Shine Chena";
+    int userId;
+
 
     @Given("I set POST api endpoint")
     public void iSetPOSTApiEndpoint() {
@@ -23,7 +25,7 @@ public class apiStepDef {
     @When("I send POST HTTP request")
     public void iSendPOSTHTTPRequest() {
         response = api.postCreateUser(name, "chena" + System.currentTimeMillis() + "@mail.com", "male", "active");
-
+        userId = response.jsonPath().getInt("id");
     }
 
 
@@ -47,6 +49,6 @@ public class apiStepDef {
 
     @When("I send GET HTTP request")
     public void iSendGETHTTPRequest() {
-        response = api.getAllUsers();
+        response = api.getUserById(userId);
     }
 }

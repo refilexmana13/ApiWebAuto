@@ -1,0 +1,62 @@
+name: Api an WEB Automation for HomeWork modul 22
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+
+  api-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Grant execute permission
+        run: chmod +x gradlew
+
+      - name: Run API Automation
+        run: ./gradlew clean test
+
+      - name: Upload API Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-cucumber-report
+          path: target/
+
+  web-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Chrome
+        uses: browser-actions/setup-chrome@v1
+
+      - name: Grant execute permission
+        run: chmod +x gradlew
+
+      - name: Run Web Automation
+        run: ./gradlew clean test
+
+      - name: Upload Web Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-cucumber-report
+          path: target/
